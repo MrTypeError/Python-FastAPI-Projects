@@ -72,3 +72,9 @@ async def update_book(update_book = Body()):
         if BOOKS[i].get('title').casefold() == update_book.get('title').casefold():
             BOOKS[i]=update_book
 
+@app.delete("/books/delete_books/{book_title}")
+async def delete_book_form_list(book_title=Body()):
+    for i in range(len(BOOKS)):
+        if BOOKS[i].get('tile').casefold() == book_title.get(book_title).casefold():
+            BOOKS.pop(i)
+            break
