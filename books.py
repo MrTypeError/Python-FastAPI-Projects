@@ -61,20 +61,30 @@ async def read_catagory_by_query(book_author : str , category : str) :
     return books_to_return
 
 # POST Request Method
-@app.post("/book/create_book")
+@app.post("/books/create_book")
 async def create_new_book(new_book=Body()) :
     BOOKS.append(new_book)
 
 # PUT Request Method
-@app.put("/book/update_book")
+@app.put("/books/update_book")
 async def update_book(update_book = Body()):
     for i in range(len(BOOKS)) :
         if BOOKS[i].get('title').casefold() == update_book.get('title').casefold():
             BOOKS[i]=update_book
 
 @app.delete("/books/delete_books/{book_title}")
-async def delete_book_form_list(book_title=Body()):
+async def delete_book_form_list(book_title : str):
     for i in range(len(BOOKS)):
         if BOOKS[i].get('tile').casefold() == book_title.get(book_title).casefold():
             BOOKS.pop(i)
             break
+
+# Create a new API Endpoint that can fetch all books from a specific author using either Path Parameters or Query Parameters.
+@app.get("/books/byauthor/{author_name}")
+async def book_by_author_name(author_name : str):
+    books_by_author_name = []
+    for book in BOOKS :
+        if book.get('author').casefold() == author_name.casefold():
+            books_by_author_name.append(book)
+    return book_by_author_name
+
